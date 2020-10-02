@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const WraperKeyboard = styled.section`
+padding-left: 18px;
   height: 100vh;
   max-width: 318px;
 `;
@@ -31,7 +32,9 @@ export const KeyboardList = styled.ul`
     align-items: center;
   }
 
-  (props) => 
+  .large-buttons {
+    
+  }
 `;
 
 //.activeButton {

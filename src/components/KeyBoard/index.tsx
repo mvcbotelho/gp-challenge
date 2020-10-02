@@ -1,14 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import paintFocus, { removeFocus } from '../../utils/paintElement';
 
+import useKeys from 'navigation/useKeys';
+
 import { WraperKeyboard, Search, KeyboardList } from './styles';
 
-const Keyboard = () => {
+const Keyboard: React.FC = () => {
   const [search, setSearch] = useState([]);
   const [isSpaceSelected, setSpaceSelected] = useState(false);
   const [isDeleteSelected, setDeleteSelected] = useState(false);
   const [currentLetter, setCurrentLetter] = useState({ x: 0, y: 0 });
   //const { setFindFilme } = useContext(AplicationContext);
+
+  const { focused, setContext } = useKeys('keyboard', {
+    
+    right: () => setContext('home'),
+  });
+
   const ALFANUMBER = [
     'A',
     'B',
@@ -85,19 +93,19 @@ const Keyboard = () => {
     space = isSpaceSelected;
   }, [isDeleteSelected, isSpaceSelected]);
 
-  const changeKeyboardFocus = (coordinate: string, side: string) => {
+  const changeKeyboardFocus = (focused: string, side: string) => {
     removeFocus(MATRIZ[counterX.current][counterY.current], '#000');
 
-    if (coordinate === 'y' && side === 'right') {
+    if (focused === 'y' && side === 'right') {
       setCurrentLetter({ x: counterX.current, y: ++counterY.current });
     }
-    if (coordinate === 'y' && side === 'left') {
+    if (focused === 'y' && side === 'left') {
       setCurrentLetter({ x: counterX.current, y: --counterY.current });
     }
-    if (coordinate === 'x' && side === 'down') {
+    if (focused === 'x' && side === 'down') {
       setCurrentLetter({ x: ++counterX.current, y: counterY.current });
     }
-    if (coordinate === 'x' && side === 'up') {
+    if (focused === 'x' && side === 'up') {
       setCurrentLetter({ x: --counterX.current, y: counterY.current });
     }
   };
